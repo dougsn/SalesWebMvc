@@ -1,8 +1,55 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model IEnumerable<Seller> // Referenciando a classe modelo para moldar os dados que serão utilizados no HTML
+
+@{
+    ViewData["Title"] = "Sellers";
 }
 
 
-<h2>Sellers</h2>
+<h2>@ViewData["Title"]</h2>
 
-<p>Sellers index page</p>
+<table class="table table-striped table-hover">
+   @*Criando o cabelho da página, com o nome dos atributos do Seller, feito por expressão lambda*@
+    <thead>
+        <tr class="success">
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseSalary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @*Criando o corpo da tabela, com o foreach para ler os dados que estão no Seller*@
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr >
+                @*Pegando de cada objeto o seu nome, email e etc... Para colocar nas linhas correspondentes.*@
+                <td> 
+                    @Html.DisplayFor(modelItem => item.Name) 
+                </td><td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td><td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BaseSalary)
+                </td>
+                <td>
+                    @*Criando os botões do "crud"*@
+                    <a asp-action="Edit" asp-rout-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-rout-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-rout-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
