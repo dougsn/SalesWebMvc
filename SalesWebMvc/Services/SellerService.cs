@@ -21,6 +21,7 @@ namespace SalesWebMvc.Services
         // Classe responsavel por criar/inserir os objetos no banco de dados.
         public void Insert(Seller obj)
         {
+            obj.Department = _context.Department.First();
             _context.Add(obj);
             _context.SaveChanges();
         }
