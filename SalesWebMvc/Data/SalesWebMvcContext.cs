@@ -12,7 +12,9 @@ namespace SalesWebMvc.Models
             : base(options)
         {
         }
-
-        public DbSet<SalesWebMvc.Models.Department> Department { get; set; }
+        // As 3 entidades do C# para fazer relação com as 3 tabelas que serão criadas no Banco de Dados
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Seller> Sellers{ get; set; }
+        public DbSet<SalesRecord> SalesRecord { get; set; }
     }
 }
