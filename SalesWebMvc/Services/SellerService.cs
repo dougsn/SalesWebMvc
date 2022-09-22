@@ -17,5 +17,12 @@ namespace SalesWebMvc.Services
         {
             return _context.Sellers.ToList(); // Acessando a fonte de dados dos vendedores e convertendo para lista.
         }
+
+        // Classe responsavel por criar/inserir os objetos no banco de dados.
+        public void Insert(Seller obj)
+        {
+            _context.Add(obj);
+            _context.SaveChanges();
+        }
     }
 }
