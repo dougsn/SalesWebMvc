@@ -36,5 +36,30 @@ namespace SalesWebMvc.Controllers
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index)); // Após criar, vai voltar para a tela index do Sellers
         }
+
+        public IActionResult Delete(int? id)
+        {   // Verificando se o id é nulo
+            if(id == null)
+            {
+                return NotFound();
+            }
+            // Buscando o objeto pelo id.
+            var obj = _sellerService.FindById(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            // Retornando para a View a busca.
+            return View(obj);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            /* Caso o botão de excluir seja clicado, será excluido e redirecionado para o Index */
+            _sellerService.Remove(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
