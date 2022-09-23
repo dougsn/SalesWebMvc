@@ -28,7 +28,7 @@ namespace SalesWebMvc.Services
 
         public Seller FindById(int id)
         { // Pegando a lista de vendedores, filtrando pelo Id deles com o que foi passado por parâmetro, para retornar.
-            
+            // O Include realiza o Join entre as tabelas de Seller e Department, para buscar o departamento do vendedor
             return _context.Sellers.Include(s => s.Department).FirstOrDefault(obj => obj.Id == id);
         }
 
