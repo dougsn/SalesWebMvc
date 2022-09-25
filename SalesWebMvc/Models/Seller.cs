@@ -5,19 +5,28 @@ using System.Linq;
 
 namespace SalesWebMvc.Models
 {
-    public class Seller
+    public class Seller /*Exemplos para validar os atributos.*/
     {
+        // O {0} se refere ao nome (Primeiro atributo), o {2} se refere ao tamanho minimo que é 3, e o {1} se refere ao tamanho máximo que é o 60.
+
         public int Id { get; set; }
+        [Required(ErrorMessage = "{0} required")] // Indicando que esse atributo é obrigatório
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}" )]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "{0} required")]
+        [EmailAddress(ErrorMessage ="Enter a valid email")]
         [DataType(DataType.EmailAddress)]
         public string  Email { get; set; }
 
+        [Required(ErrorMessage = "{0} required")]
         [Display(Name = "Birth Date")] // Configurando a forma que o atributo aparecerá em nossa View()
         [DataType(DataType.Date)] // Configurando o formata para preencher a data no formulário
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate{ get; set; }
 
+        [Required(ErrorMessage = "{0} required")]
+        [Range(100.0, 50000.0, ErrorMessage = "{0} must be from {1} to {2}")] // O salário tem que ser no minimo 1100 e max 50000
         [Display(Name = "Base Salary")]
         [DisplayFormat(DataFormatString = "{0:F2}")] // Indicando que esse atributo terá 2 casas decimais
         public double BaseSalary { get; set; }

@@ -36,7 +36,14 @@ namespace SalesWebMvc.Controllers
         [HttpPost] // Indicando que esse método é um post
         [ValidateAntiForgeryToken] // Protegendo o post 
         public IActionResult Create(Seller seller)
-        {   // Efetivando a inserção no banco de dados da criação dos vendedores
+        {
+            if (!ModelState.IsValid) { // Se o Seller não for válido, ele volta para a tela inicial
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Departments = departments, Seller = seller };
+                return View(viewModel);
+            }
+
+            // Efetivando a inserção no banco de dados da criação dos vendedores
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index)); // Após criar, vai voltar para a tela index do Sellers
         }
@@ -106,6 +113,12 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            if (!ModelState.IsValid) { // Se o Seller não for válido, ele volta para a tela inicial
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Departments = departments, Seller = seller};
+                return View(viewModel);
+            }
+
             if(id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not mismatch" });
