@@ -36,12 +36,21 @@ namespace SalesWebMvc.Services
 
         public async Task RemoveAsync(int id)  
         {
+            try
+            {
+
+            
             // Pegando o vendedor pelo ID
             var obj = _context.Sellers.Find(id);
             // para dps remover o vendedor selecionado pelo id
             _context.Sellers.Remove(obj);
             // Salvando a alteração no banco de dados.
             await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException("Can't delete seller because he/she has sales");
+            }
         }
 
         public async Task UpdateAsync(Seller obj) // O Any() serve para verificar se existe algum registro no BDD com base no Lambda.
